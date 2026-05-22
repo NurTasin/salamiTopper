@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import { cn } from '@/lib/utils';
 
-const PRESETS = [50, 100, 200, 500, 1000];
+const PRESETS = [20, 50, 100, 200, 500];
 
 export default function DonationForm() {
   const [name, setName] = useState('');
