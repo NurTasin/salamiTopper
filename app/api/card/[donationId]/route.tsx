@@ -102,7 +102,7 @@ export async function GET(
         </div>
 
         <div style={{ position: 'absolute', bottom: 40, right: 40, fontSize: 20, opacity: 0.8, display: 'flex' }}>
-          salamitopper.com
+          salami-topper.vercel.app
         </div>
       </div>
     ),

@@ -12,7 +12,7 @@ export function formatCurrency(amount: number | string) {
     currency: 'BDT',
     minimumFractionDigits: 0,
     maximumFractionDigits: 2,
-  }).format(num).replace('BDT', '৳');
+  }).format(num);
 }
 
 export function formatDate(date: string | Date) {
