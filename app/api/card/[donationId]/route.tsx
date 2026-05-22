@@ -74,7 +74,7 @@ export async function GET(
           
           {showAmount && (
             <div style={{ fontSize: 40, color: '#ECFDF5', marginBottom: 20 }}>
-              দিয়েছেন {formatCurrency(donation.amount)} সালামি
+              {`দিয়েছেন ${formatCurrency(donation.amount)} সালামি`}
             </div>
           )}
 
@@ -102,7 +102,7 @@ export async function GET(
             border: '2px solid #FCD34D'
           }}>
             <span style={{ fontSize: 24, fontWeight: 700 }}>
-              #{rank} on SalamiTopper
+              {`#${rank} on SalamiTopper`}
           </span>
         </div>
 
