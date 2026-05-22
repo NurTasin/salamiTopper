@@ -39,7 +39,7 @@ export async function GET(
 
     // Load Hind Siliguri font
     const fontData = await fetch(
-      new URL('https://fonts.gstatic.com/s/hindsiliguri/v11/ijwb96Z5Nc_1_S0-z-U1H0W2Y9S_V-M.ttf')
+      new URL('https://raw.githubusercontent.com/google/fonts/main/ofl/hindsiliguri/HindSiliguri-Bold.ttf')
     ).then((res) => res.arrayBuffer());
 
     return new ImageResponse(
