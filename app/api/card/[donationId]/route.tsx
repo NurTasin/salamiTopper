@@ -61,19 +61,19 @@ export async function GET(
           }}
         >
           {/* Festive Accents */}
-          <div style={{ position: 'absolute', top: 40, right: 40, fontSize: 60 }}>🌙</div>
-          <div style={{ position: 'absolute', bottom: 40, left: 40, fontSize: 60 }}>🏮</div>
+          <div style={{ position: 'absolute', top: 40, right: 40, fontSize: 60, display: 'flex' }}>🌙</div>
+          <div style={{ position: 'absolute', bottom: 40, left: 40, fontSize: 60, display: 'flex' }}>🏮</div>
           
-          <h1 style={{ fontSize: 80, fontWeight: 900, marginBottom: 20, color: '#FCD34D' }}>
-            🎊 ঈদ মোবারক!
-          </h1>
+          <div style={{ fontSize: 80, fontWeight: 900, marginBottom: 20, color: '#FCD34D', display: 'flex' }}>
+            {`🎊 ঈদ মোবারক!`}
+          </div>
           
-          <div style={{ fontSize: 60, fontWeight: 700, marginBottom: 10 }}>
+          <div style={{ fontSize: 60, fontWeight: 700, marginBottom: 10, display: 'flex' }}>
             {donation.name}
           </div>
           
           {showAmount && (
-            <div style={{ fontSize: 40, color: '#ECFDF5', marginBottom: 20 }}>
+            <div style={{ fontSize: 40, color: '#ECFDF5', marginBottom: 20, display: 'flex' }}>
               {`দিয়েছেন ${formatCurrency(donation.amount)} সালামি`}
             </div>
           )}
@@ -86,9 +86,10 @@ export async function GET(
               textAlign: 'center',
               maxWidth: '80%',
               marginBottom: 40,
-              lineHeight: 1.4
+              lineHeight: 1.4,
+              display: 'flex'
             }}>
-              &quot;{donation.message}&quot;
+              {`"${donation.message}"`}
             </div>
           )}
 
@@ -101,12 +102,12 @@ export async function GET(
             borderRadius: '50px',
             border: '2px solid #FCD34D'
           }}>
-            <span style={{ fontSize: 24, fontWeight: 700 }}>
+            <span style={{ fontSize: 24, fontWeight: 700, display: 'flex' }}>
               {`#${rank} on SalamiTopper`}
           </span>
         </div>
 
-        <div style={{ position: 'absolute', bottom: 40, right: 40, fontSize: 20, opacity: 0.8 }}>
+        <div style={{ position: 'absolute', bottom: 40, right: 40, fontSize: 20, opacity: 0.8, display: 'flex' }}>
           salamitopper.com
         </div>
       </div>
