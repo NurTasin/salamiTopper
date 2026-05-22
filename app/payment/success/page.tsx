@@ -7,13 +7,13 @@ import { Loader2 } from 'lucide-react';
 
 function SuccessContent() {
   const searchParams = useSearchParams();
-  const payment_id = searchParams.get('payment_id');
+  const invoice_id = searchParams.get('invoice_id');
   const [donation, setDonation] = useState<{ id: string, rank: number, name: string, amount: number, is_amount_hidden: boolean, message: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (payment_id) {
-      fetch(`/api/verify?payment_id=${payment_id}`)
+    if (invoice_id) {
+      fetch(`/api/verify?invoice_id=${invoice_id}`)
         .then(res => res.json())
         .then(data => {
           if (data.id) {
@@ -24,7 +24,7 @@ function SuccessContent() {
         })
         .catch(() => setError('Failed to verify payment'));
     }
-  }, [payment_id]);
+  }, [invoice_id]);
 
   if (error) {
     return (

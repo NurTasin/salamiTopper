@@ -13,6 +13,7 @@ export interface PaymentRequest {
   redirect_url: string;
   cancel_url: string;
   webhook_url: string;
+  return_type: 'GET' | 'POST';
 }
 
 export interface PaymentResponse {
@@ -48,6 +49,7 @@ export async function initiatePayment(data: PaymentRequest): Promise<PaymentResp
         redirect_url: data.redirect_url,
         cancel_url: data.cancel_url,
         webhook_url: data.webhook_url,
+        return_type: data.return_type,
       }),
     });
 
@@ -65,7 +67,7 @@ export async function initiatePayment(data: PaymentRequest): Promise<PaymentResp
   }
 }
 
-export async function verifyPayment(payment_id: string): Promise<VerifyResponse> {
+export async function verifyPayment(invoice_id: string): Promise<VerifyResponse> {
   const response = await fetch(`${BASE_URL}/verify-payment`, {
     method: 'POST',
     headers: {
@@ -73,7 +75,7 @@ export async function verifyPayment(payment_id: string): Promise<VerifyResponse>
       'RT-UDDOKTAPAY-API-KEY': API_KEY!,
     },
     body: JSON.stringify({
-      payment_id,
+      invoice_id,
     }),
   });
 

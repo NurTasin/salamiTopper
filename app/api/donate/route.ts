@@ -27,6 +27,7 @@ export async function POST(req: Request) {
       redirect_url: `${appUrl}/payment/success`,
       cancel_url: `${appUrl}/payment/failed`,
       webhook_url: `${appUrl}/api/webhook`,
+      return_type: 'GET',
     });
 
     if (paymentResponse.status) {

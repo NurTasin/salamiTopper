@@ -4,14 +4,14 @@ import { verifyPayment } from '@/lib/uddoktapay';
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const payment_id = searchParams.get('payment_id');
+  const invoice_id = searchParams.get('invoice_id');
 
-  if (!payment_id) {
-    return NextResponse.json({ message: 'Missing payment_id' }, { status: 400 });
+  if (!invoice_id) {
+    return NextResponse.json({ message: 'Missing invoice_id' }, { status: 400 });
   }
 
   try {
-    const verification = await verifyPayment(payment_id);
+    const verification = await verifyPayment(invoice_id);
 
     if (verification.status === 'COMPLETED') {
       const donation_id = verification.metadata.donation_id;
@@ -19,14 +19,14 @@ export async function GET(req: Request) {
       // Update donation status
       const [donation] = await sql`
         UPDATE donations 
-        SET status = 'paid', paid_at = NOW(), payment_id = ${payment_id}
+        SET status = 'paid', paid_at = NOW(), payment_id = ${invoice_id}
         WHERE id = ${donation_id} AND status != 'paid'
         RETURNING *
       `;
 
       if (!donation) {
         // Might already be updated by webhook
-        const [existing] = await sql`SELECT * FROM donations WHERE payment_id = ${payment_id}`;
+        const [existing] = await sql`SELECT * FROM donations WHERE payment_id = ${invoice_id}`;
         if (!existing) return NextResponse.json({ message: 'Donation not found' }, { status: 404 });
         
         const [rank] = await sql`

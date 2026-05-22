@@ -10,12 +10,12 @@ export async function POST(req: Request) {
 
   try {
     const body = await req.json();
-    const { status, payment_id, metadata } = body;
+    const { status, invoice_id, metadata } = body;
 
     if (status === 'COMPLETED') {
       await sql`
         UPDATE donations 
-        SET status = 'paid', paid_at = NOW(), payment_id = ${payment_id}
+        SET status = 'paid', paid_at = NOW(), payment_id = ${invoice_id}
         WHERE id = ${metadata.donation_id} AND status != 'paid'
       `;
     } else {
