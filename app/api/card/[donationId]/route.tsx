@@ -37,11 +37,6 @@ export async function GET(
 
     const showAmount = !donation.is_amount_hidden || isAdminView;
 
-    // Load Hind Siliguri font
-    const fontData = await fetch(
-      new URL('https://raw.githubusercontent.com/google/fonts/main/ofl/hindsiliguri/HindSiliguri-Bold.ttf')
-    ).then((res) => res.arrayBuffer());
-
     return new ImageResponse(
       (
         <div
@@ -57,7 +52,6 @@ export async function GET(
             padding: '40px',
             border: '20px solid #FCD34D',
             color: 'white',
-            fontFamily: '"Hind Siliguri", sans-serif',
           }}
         >
           {/* Festive Accents */}
@@ -65,7 +59,7 @@ export async function GET(
           <div style={{ position: 'absolute', bottom: 40, left: 40, fontSize: 60, display: 'flex' }}>🏮</div>
           
           <div style={{ fontSize: 80, fontWeight: 900, marginBottom: 20, color: '#FCD34D', display: 'flex' }}>
-            {`🎊 ঈদ মোবারক!`}
+            {`Eid Mubarak!`}
           </div>
           
           <div style={{ fontSize: 60, fontWeight: 700, marginBottom: 10, display: 'flex' }}>
@@ -74,7 +68,7 @@ export async function GET(
           
           {showAmount && (
             <div style={{ fontSize: 40, color: '#ECFDF5', marginBottom: 20, display: 'flex' }}>
-              {`দিয়েছেন ${formatCurrency(donation.amount)} সালামি`}
+              {`donated ${formatCurrency(donation.amount)} Salami`}
             </div>
           )}
 
@@ -115,17 +109,9 @@ export async function GET(
     {
       width: 1200,
       height: 630,
-      fonts: [
-        {
-          name: 'Hind Siliguri',
-          data: fontData,
-          style: 'normal',
-        },
-      ],
     }
   );
 } catch {
-  console.error('Card generation error');
   return new Response('Failed to generate card', { status: 500 });
 }
 }
