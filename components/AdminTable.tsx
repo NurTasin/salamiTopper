@@ -48,6 +48,22 @@ export default function AdminTable() {
     }
   };
 
+  const handleDeletePending = async () => {
+    if (!confirm('Are you sure you want to remove ALL pending payments? This cannot be undone.')) return;
+
+    try {
+      const res = await fetch('/api/admin/transactions/pending', { method: 'DELETE' });
+      if (res.ok) {
+        toast.success('All pending payments cleared');
+        setDonations(donations.filter(d => d.status !== 'pending'));
+      } else {
+        toast.error('Clear failed');
+      }
+    } catch {
+      toast.error('Error clearing pending payments');
+    }
+  };
+
   const exportCSV = () => {
     const headers = ['Name', 'Amount', 'Message', 'Status', 'Date', 'Hidden'];
     const rows = donations.map(d => [
@@ -73,15 +89,24 @@ export default function AdminTable() {
 
   return (
     <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-emerald-100">
-      <div className="p-6 flex justify-between items-center border-b border-emerald-50 bg-emerald-50/50">
+      <div className="p-6 flex flex-wrap gap-4 justify-between items-center border-b border-emerald-50 bg-emerald-50/50">
         <h3 className="text-xl font-bold text-emerald-900">All Transactions</h3>
-        <button
-          onClick={exportCSV}
-          className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-xl hover:bg-emerald-700 transition-all font-semibold"
-        >
-          <Download className="w-4 h-4" />
-          Export CSV
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={handleDeletePending}
+            className="flex items-center gap-2 bg-red-50 text-red-600 border border-red-100 px-4 py-2 rounded-xl hover:bg-red-100 transition-all font-semibold"
+          >
+            <Trash2 className="w-4 h-4" />
+            Clear Pending
+          </button>
+          <button
+            onClick={exportCSV}
+            className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-xl hover:bg-emerald-700 transition-all font-semibold"
+          >
+            <Download className="w-4 h-4" />
+            Export CSV
+          </button>
+        </div>
       </div>
 
       <div className="overflow-x-auto">
