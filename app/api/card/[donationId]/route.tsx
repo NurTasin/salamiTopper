@@ -38,7 +38,9 @@ export async function GET(
 
     // Use the provided background image
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    const domain = 'salamitopper.bigtdevs.xyz';
     const bgUrl = `${baseUrl}/bg.png`;
+    const qrUrl = `${baseUrl}/qr.png`;
 
     return new ImageResponse(
       (
@@ -74,92 +76,157 @@ export async function GET(
             }} 
           />
 
-          {/* Overlay to ensure readability */}
+          {/* Stronger Overlay to ensure readability */}
           <div style={{
             position: 'absolute',
             top: 0,
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: 'rgba(6, 78, 59, 0.3)',
+            backgroundColor: 'rgba(6, 78, 59, 0.45)',
             display: 'flex',
           }} />
 
-          {/* Content Container */}
+          {/* Content Container - Darker glassmorphism for better contrast */}
           <div style={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
             textAlign: 'center',
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
-            backdropFilter: 'blur(10px)',
-            padding: '60px',
-            borderRadius: '40px',
-            border: '2px solid rgba(252, 211, 77, 0.3)',
+            backgroundColor: 'rgba(0, 0, 0, 0.25)',
+            backdropFilter: 'blur(15px)',
+            padding: '80px 60px',
+            borderRadius: '60px',
+            border: '2px solid rgba(252, 211, 77, 0.2)',
             width: '100%',
-            maxWidth: '900px',
+            maxWidth: '960px',
+            position: 'relative',
           }}>
-            <div style={{ fontSize: 100, fontWeight: 900, marginBottom: 40, color: '#FCD34D', display: 'flex' }}>
+            {/* Header */}
+            <div style={{ 
+              fontSize: 110, 
+              fontWeight: 900, 
+              marginBottom: 20, 
+              color: '#FCD34D', 
+              display: 'flex',
+              letterSpacing: '-2px',
+              textShadow: '0 4px 10px rgba(0,0,0,0.3)'
+            }}>
               {`Eid Mubarak!`}
             </div>
 
-            <div style={{ fontSize: 48, fontWeight: 300, marginBottom: 20, color: '#ECFDF5', opacity: 0.9, display: 'flex' }}>
+            <div style={{ 
+              fontSize: 42, 
+              fontWeight: 400, 
+              marginBottom: 60, 
+              color: '#ECFDF5', 
+              opacity: 0.95, 
+              display: 'flex',
+              textTransform: 'uppercase',
+              letterSpacing: '4px'
+            }}>
               {`Sharing the Joy of Salami`}
             </div>
 
-            <div style={{ height: '4px', width: '200px', backgroundColor: '#FCD34D', marginBottom: 60, display: 'flex' }} />
+            {/* Accent Line */}
+            <div style={{ height: '2px', width: '120px', backgroundColor: 'rgba(252, 211, 77, 0.5)', marginBottom: 60, display: 'flex' }} />
 
-            <div style={{ fontSize: 72, fontWeight: 700, marginBottom: 20, display: 'flex' }}>
+            {/* Donor Name */}
+            <div style={{ 
+              fontSize: 90, 
+              fontWeight: 900, 
+              marginBottom: 10, 
+              display: 'flex',
+              color: 'white'
+            }}>
               {donation.name}
             </div>
 
-            {showAmount && (
-              <div style={{ fontSize: 40, color: '#FCD34D', marginBottom: 40, fontWeight: 600, display: 'flex' }}>
-                {`gifted ${formatCurrency(donation.amount)} Salami`}
+            {/* Gift Details */}
+            {showAmount ? (
+              <div style={{ 
+                fontSize: 48, 
+                color: 'white', 
+                marginBottom: 60, 
+                fontWeight: 500, 
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px'
+              }}>
+                {`Gifted `}
+                <span style={{ color: '#FCD34D', fontWeight: 800 }}>{formatCurrency(donation.amount)}</span>
+                {` Salami`}
+              </div>
+            ) : (
+              <div style={{ fontSize: 48, color: '#FCD34D', marginBottom: 60, fontWeight: 600, display: 'flex' }}>
+                {`Gifted a Secret Salami`}
               </div>
             )}
 
+            {/* Eid Message */}
             {donation.message && (
               <div style={{ 
-                fontSize: 36, 
+                fontSize: 38, 
                 fontStyle: 'italic', 
-                color: '#F0FDF4', 
+                color: '#D1FAE5', 
                 maxWidth: '100%',
-                marginBottom: 60,
-                lineHeight: 1.5,
-                display: 'flex'
+                marginBottom: 80,
+                lineHeight: 1.6,
+                display: 'flex',
+                padding: '0 40px'
               }}>
                 {`"${donation.message}"`}
               </div>
             )}
 
+            {/* Rank Badge */}
             <div style={{ 
               display: 'flex',
               alignItems: 'center',
-              backgroundColor: '#065F46',
-              padding: '20px 50px',
+              backgroundColor: '#064E3B',
+              padding: '24px 60px',
               borderRadius: '100px',
               border: '2px solid #FCD34D',
-              marginTop: 'auto',
+              boxShadow: '0 10px 30px rgba(0,0,0,0.2)'
             }}>
-              <span style={{ fontSize: 32, fontWeight: 700, display: 'flex' }}>
-                {`Rank #${rank} on SalamiTopper`}
+              <span style={{ fontSize: 36, fontWeight: 800, display: 'flex', color: 'white' }}>
+                {Number(rank) <= 3 ? `Rank #${rank} on SalamiTopper` : `Gifted Through SalamiTopper`}
               </span>
             </div>
           </div>
 
-          {/* Footer */}
-          <div style={{ 
-            position: 'absolute', 
-            bottom: 60, 
-            fontSize: 24, 
-            opacity: 0.8, 
+          {/* QR Code and Domain */}
+          <div style={{
+            position: 'absolute',
+            bottom: 80,
             display: 'flex',
-            fontWeight: 600,
-            letterSpacing: '1px'
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '20px'
           }}>
-            salamitopper.com
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img 
+              src={qrUrl} 
+              alt="qr" 
+              width="180" 
+              height="180" 
+              style={{ 
+                borderRadius: '20px',
+                border: '4px solid #FCD34D',
+                display: 'flex'
+              }} 
+            />
+            <div style={{ 
+              fontSize: 32, 
+              color: 'white',
+              opacity: 0.9, 
+              display: 'flex',
+              fontWeight: 700,
+              letterSpacing: '2px'
+            }}>
+              {domain}
+            </div>
           </div>
         </div>
       ),
