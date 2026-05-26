@@ -77,6 +77,27 @@ export default async function Home() {
         </div>
       </header>
 
+      {/* Our Mission Section */}
+      <section className="py-16 px-4 max-w-4xl mx-auto text-center relative z-10">
+        <div className="bg-emerald-50/50 backdrop-blur-sm rounded-[3rem] p-10 md:p-16 border-2 border-emerald-100 shadow-inner">
+          <Heart className="w-12 h-12 text-emerald-600 mx-auto mb-6 animate-pulse" />
+          <h2 className="text-3xl md:text-4xl font-black text-emerald-900 mb-6 font-hind">
+            আমাদের লক্ষ্য 🤝
+          </h2>
+          <p className="text-xl md:text-2xl text-emerald-800 font-bold leading-relaxed mb-8 font-hind">
+            আপনার দেয়া প্রতিটি সালামি পৌঁছে যাবে সুবিধাবঞ্চিত মানুষের কাছে। 
+            আমরা চাই উৎসবের এই আনন্দ কেবল নিজের মাঝে সীমাবদ্ধ না রেখে ছড়িয়ে দিতে তাদের মাঝে, 
+            যাদের জন্য ঈদ মানেই নতুন এক সংগ্রামের দিন। 
+          </p>
+          <div className="h-px w-24 bg-emerald-200 mx-auto mb-8" />
+          <p className="text-lg text-emerald-700 italic font-medium leading-relaxed">
+            Our mission is simple: to make Eid a bit more joyous and pleasurable for those less fortunate. 
+            By sharing your Salami, you are directly helping us bring food, clothes, and smiles to 
+            underprivileged families across the community.
+          </p>
+        </div>
+      </section>
+
       {/* Donation Form Section */}
       <DonationForm />
 
