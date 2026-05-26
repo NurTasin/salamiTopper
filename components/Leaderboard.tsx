@@ -22,7 +22,7 @@ export default function Leaderboard() {
 
   const fetchLeaderboard = useCallback(async () => {
     try {
-      const res = await fetch(`/api/leaderboard?page=${page}&search=${search}`);
+      const res = await fetch(`/api/leaderboard?page=${page}&search=${search}`, { cache: 'no-store' });
       const data = await res.json();
       setDonations(data.donations);
       setTotalPages(data.total_pages);

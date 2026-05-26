@@ -17,7 +17,7 @@ export default function Ticker() {
   useEffect(() => {
     const fetchRecent = async () => {
       try {
-        const res = await fetch('/api/leaderboard?limit=5');
+        const res = await fetch('/api/leaderboard?limit=5', { cache: 'no-store' });
         const data = await res.json();
         setDonations(data.donations);
       } catch {

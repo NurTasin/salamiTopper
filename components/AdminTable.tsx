@@ -20,7 +20,7 @@ export default function AdminTable() {
 
   const fetchTransactions = async () => {
     try {
-      const res = await fetch('/api/admin/transactions');
+      const res = await fetch('/api/admin/transactions', { cache: 'no-store' });
       const data = await res.json();
       setDonations(data);
     } catch {
@@ -52,7 +52,10 @@ export default function AdminTable() {
     if (!confirm('Are you sure you want to remove ALL pending payments? This cannot be undone.')) return;
 
     try {
-      const res = await fetch('/api/admin/transactions/pending', { method: 'DELETE' });
+      const res = await fetch('/api/admin/transactions/pending', { 
+        method: 'DELETE',
+        cache: 'no-store'
+      });
       if (res.ok) {
         toast.success('All pending payments cleared');
         setDonations(donations.filter(d => d.status !== 'pending'));
