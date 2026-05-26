@@ -107,7 +107,16 @@ export default async function Home() {
           <Heart className="w-4 h-4 fill-emerald-600 text-emerald-600" />
           <span className="font-semibold">SalamiTopper — Spreading Joy this Eid</span>
         </div>
-        <p className="text-sm">Made with 💚 for the community</p>
+        <p className="text-sm mb-8">Made with 💚 for the community</p>
+
+        <Link
+          href="https://www.supportkori.com/bigt"
+          target="_blank"
+          className="inline-flex items-center gap-2 bg-yellow-400/10 hover:bg-yellow-400/20 text-yellow-700 px-6 py-3 rounded-2xl font-bold transition-all border-2 border-yellow-400/20"
+        >
+          <span className="text-xl">☕</span>
+          Want to support the developer? Buy him a coffee
+        </Link>
       </footer>
 
       {/* Bottom Ticker */}
