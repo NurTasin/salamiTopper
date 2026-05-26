@@ -5,45 +5,21 @@ A Bengali Eid gifting app where visitors give "Salami" (Eid money) to the site o
 ## Features
 - 🌙 **Festive UI**: Emerald green and gold theme with Bengali support.
 - 💳 **Payment Integration**: Secure payments via UddoktaPay (bKash, Nagad, Rocket).
-- 🏆 **Live Leaderboard**: Ranked by donation amount with live updates.
+- 🏆 **Live Leaderboard**: Ranked by Salami amount with live updates.
 - 📤 **Share Cards**: Dynamic PNG generation for social sharing.
-- 🔐 **Admin Panel**: Protected dashboard to manage transactions and export CSV.
-
-## Tech Stack
-- **Framework**: Next.js 14 (App Router)
-- **Database**: Neon PostgreSQL
-- **Styling**: Tailwind CSS + Framer Motion
-- **Payments**: UddoktaPay REST API
-- **Image Gen**: `next/og` (Satori)
-
-## Prerequisites
-- Node.js 18+
-- Neon PostgreSQL Account
-- UddoktaPay Merchant Account
-
-## Setup Instructions
-
-1. **Clone the repository**
-   ```bash
-   git clone <repo-url>
-   cd salami-leaderboard
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Environment Variables**
-   Create a `.env.local` file based on `.env.local.example`:
-   ```env
-   DATABASE_URL=postgres://...
-   UDDOKTAPAY_API_KEY=your_api_key
-   UDDOKTAPAY_BASE_URL=https://yourstore.uddoktapay.com/api
-   NEXT_PUBLIC_APP_URL=http://localhost:3000
-   ADMIN_PASSWORD=your_secure_password
-   ADMIN_COOKIE_SECRET=your_32_char_secret
-   ```
+- 🔐 **Admin Panel**: Protected dashboard to manage Salami gifts and export CSV.
+...
+1. **Redesigning the Share Card**: Switching from landscape to a 1080x1920 portrait format suitable for social media stories.
+2. **New Background**: Incorporating the provided festive background image.
+3. **Terminology Update**: Replacing the word "donation" with "Salami Gift" or "Salami" across the entire UI.
+...
+DATABASE_URL=postgres://...
+UDDOKTAPAY_API_KEY=your_api_key
+UDDOKTAPAY_BASE_URL=https://yourstore.uddoktapay.com/api
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+ADMIN_PASSWORD=your_secure_password
+ADMIN_COOKIE_SECRET=your_32_char_secret
+```
 
 4. **Database Migration**
    Run the migration script to create the `donations` table:

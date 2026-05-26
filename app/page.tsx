@@ -37,11 +37,11 @@ export default async function Home() {
         
         <div className="flex flex-wrap justify-center gap-4 mb-12">
           <div className="bg-white px-8 py-4 rounded-3xl shadow-xl border-2 border-emerald-50">
-            <p className="text-sm font-bold text-emerald-600 uppercase tracking-wider">Total Collected</p>
+            <p className="text-sm font-bold text-emerald-600 uppercase tracking-wider">Total Salami</p>
             <p className="text-3xl font-black text-emerald-900">৳{stats.total_collected.toLocaleString()}</p>
           </div>
           <div className="bg-white px-8 py-4 rounded-3xl shadow-xl border-2 border-emerald-50">
-            <p className="text-sm font-bold text-emerald-600 uppercase tracking-wider">Gifts Received</p>
+            <p className="text-sm font-bold text-emerald-600 uppercase tracking-wider">Generous Givers</p>
             <p className="text-3xl font-black text-emerald-900">{stats.total_donors}</p>
           </div>
         </div>

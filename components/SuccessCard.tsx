@@ -52,7 +52,7 @@ export default function SuccessCard({ donation }: SuccessCardProps) {
       </div>
       
       <h2 className="text-3xl font-bold text-emerald-900 mb-2">Eid Mubarak!</h2>
-      <p className="text-emerald-700 mb-6">Thank you for your generous Salami, {donation.name}!</p>
+      <p className="text-emerald-700 mb-6">Thank you for your generous Salami Gift, {donation.name}!</p>
 
       <div className="bg-emerald-50 rounded-2xl p-6 mb-8">
         <p className="text-sm font-bold text-emerald-800 uppercase mb-1">Your Salami</p>
@@ -71,7 +71,7 @@ export default function SuccessCard({ donation }: SuccessCardProps) {
           className="w-full py-4 bg-emerald-600 text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-100"
         >
           <Share2 className="w-5 h-5" />
-          Share My Card
+          Share My Salami Card
         </button>
         
         <Link

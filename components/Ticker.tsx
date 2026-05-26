@@ -38,9 +38,9 @@ export default function Ticker() {
         {[...donations, ...donations].map((d, i) => (
           <div key={`${d.id}-${i}`} className="flex items-center gap-2 mx-8">
             <span className="font-bold text-emerald-400">✨ {d.name}</span>
-            <span>gave</span>
+            <span>gifted</span>
             <span className="font-bold text-yellow-400">
-              {d.is_amount_hidden ? 'Salami 🤫' : formatCurrency(d.amount!)}
+              {d.is_amount_hidden ? 'A Secret Salami 🤫' : formatCurrency(d.amount!)}
             </span>
             <span className="text-emerald-300">🎊</span>
           </div>
