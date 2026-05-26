@@ -4,6 +4,8 @@ import Ticker from '@/components/Ticker';
 import { Trophy, Gift, Heart, Star } from 'lucide-react';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 async function getStats() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/leaderboard?limit=1`, { cache: 'no-store' });
   if (!res.ok) return { total_collected: 0, total_donors: 0 };

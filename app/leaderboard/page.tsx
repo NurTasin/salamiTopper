@@ -3,6 +3,8 @@ import Leaderboard from '@/components/Leaderboard';
 import { Home } from 'lucide-react';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 export default function LeaderboardPage() {
   return (
     <main className="min-h-screen bg-[#FDFBF7] py-12">

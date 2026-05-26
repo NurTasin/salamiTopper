@@ -6,6 +6,8 @@ import { LogOut, Users, Wallet, Clock, AlertTriangle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 
+export const dynamic = 'force-dynamic';
+
 interface Stats {
   total_collected: number;
   total_donors: number;
