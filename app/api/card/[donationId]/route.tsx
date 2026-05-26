@@ -51,14 +51,29 @@ export async function GET(
             alignItems: 'center',
             justifyContent: 'center',
             backgroundColor: '#064E3B',
-            backgroundImage: `url(${bgUrl})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
             padding: '80px',
             color: 'white',
             fontFamily: 'sans-serif',
+            position: 'relative',
           }}
         >
+          {/* Background Image */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img 
+            src={bgUrl} 
+            alt="bg"
+            width="1080" 
+            height="1920" 
+            style={{ 
+              position: 'absolute', 
+              top: 0, 
+              left: 0, 
+              width: '1080px', 
+              height: '1920px', 
+              display: 'flex'
+            }} 
+          />
+
           {/* Overlay to ensure readability */}
           <div style={{
             position: 'absolute',
@@ -66,7 +81,7 @@ export async function GET(
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: 'rgba(6, 78, 59, 0.2)',
+            backgroundColor: 'rgba(6, 78, 59, 0.3)',
             display: 'flex',
           }} />
 
