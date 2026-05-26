@@ -13,7 +13,6 @@ export async function GET(
     const { searchParams } = new URL(req.url);
     const isAdminView = searchParams.get('admin') === '1';
 
-    // Verify admin session if admin view is requested
     if (isAdminView) {
       const session = await getSession();
       if (!session) {
@@ -26,7 +25,7 @@ export async function GET(
     `;
 
     if (!donation) {
-      return new Response('Donation not found', { status: 404 });
+      return new Response('Salami gift not found', { status: 404 });
     }
 
     const [rankResult] = await sql`
@@ -36,6 +35,10 @@ export async function GET(
     const rank = rankResult.rank;
 
     const showAmount = !donation.is_amount_hidden || isAdminView;
+
+    // Use the provided background image
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    const bgUrl = `${baseUrl}/bg.png`;
 
     return new ImageResponse(
       (
@@ -48,70 +51,110 @@ export async function GET(
             alignItems: 'center',
             justifyContent: 'center',
             backgroundColor: '#064E3B',
-            backgroundImage: 'linear-gradient(to bottom right, #064E3B, #059669)',
-            padding: '40px',
-            border: '20px solid #FCD34D',
+            backgroundImage: `url(${bgUrl})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            padding: '80px',
             color: 'white',
+            fontFamily: 'sans-serif',
           }}
         >
-          {/* Festive Accents */}
-          <div style={{ position: 'absolute', top: 40, right: 40, fontSize: 60, display: 'flex' }}>🌙</div>
-          <div style={{ position: 'absolute', bottom: 40, left: 40, fontSize: 60, display: 'flex' }}>🏮</div>
-          
-          <div style={{ fontSize: 80, fontWeight: 900, marginBottom: 20, color: '#FCD34D', display: 'flex' }}>
-            {`Eid Mubarak!`}
-          </div>
-          
-          <div style={{ fontSize: 60, fontWeight: 700, marginBottom: 10, display: 'flex' }}>
-            {donation.name}
-          </div>
-          
-          {showAmount && (
-            <div style={{ fontSize: 40, color: '#ECFDF5', marginBottom: 20, display: 'flex' }}>
-              {`donated ${formatCurrency(donation.amount)} Salami`}
-            </div>
-          )}
-
-          {donation.message && (
-            <div style={{ 
-              fontSize: 32, 
-              fontStyle: 'italic', 
-              color: '#F0FDF4', 
-              textAlign: 'center',
-              maxWidth: '80%',
-              marginBottom: 40,
-              lineHeight: 1.4,
-              display: 'flex'
-            }}>
-              {`"${donation.message}"`}
-            </div>
-          )}
-
-          <div style={{ 
+          {/* Overlay to ensure readability */}
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(6, 78, 59, 0.2)',
             display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            backgroundColor: '#065F46',
-            padding: '10px 30px',
-            borderRadius: '50px',
-            border: '2px solid #FCD34D'
-          }}>
-            <span style={{ fontSize: 24, fontWeight: 700, display: 'flex' }}>
-              {`#${rank} on SalamiTopper`}
-          </span>
-        </div>
+          }} />
 
-        <div style={{ position: 'absolute', bottom: 40, right: 40, fontSize: 20, opacity: 0.8, display: 'flex' }}>
-          salami-topper.vercel.app
+          {/* Content Container */}
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textAlign: 'center',
+            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            backdropFilter: 'blur(10px)',
+            padding: '60px',
+            borderRadius: '40px',
+            border: '2px solid rgba(252, 211, 77, 0.3)',
+            width: '100%',
+            maxWidth: '900px',
+          }}>
+            <div style={{ fontSize: 100, fontWeight: 900, marginBottom: 40, color: '#FCD34D', display: 'flex' }}>
+              {`Eid Mubarak!`}
+            </div>
+
+            <div style={{ fontSize: 48, fontWeight: 300, marginBottom: 20, color: '#ECFDF5', opacity: 0.9, display: 'flex' }}>
+              {`Sharing the Joy of Salami`}
+            </div>
+
+            <div style={{ height: '4px', width: '200px', backgroundColor: '#FCD34D', marginBottom: 60, display: 'flex' }} />
+
+            <div style={{ fontSize: 72, fontWeight: 700, marginBottom: 20, display: 'flex' }}>
+              {donation.name}
+            </div>
+
+            {showAmount && (
+              <div style={{ fontSize: 40, color: '#FCD34D', marginBottom: 40, fontWeight: 600, display: 'flex' }}>
+                {`gifted ${formatCurrency(donation.amount)} Salami`}
+              </div>
+            )}
+
+            {donation.message && (
+              <div style={{ 
+                fontSize: 36, 
+                fontStyle: 'italic', 
+                color: '#F0FDF4', 
+                maxWidth: '100%',
+                marginBottom: 60,
+                lineHeight: 1.5,
+                display: 'flex'
+              }}>
+                {`"${donation.message}"`}
+              </div>
+            )}
+
+            <div style={{ 
+              display: 'flex',
+              alignItems: 'center',
+              backgroundColor: '#065F46',
+              padding: '20px 50px',
+              borderRadius: '100px',
+              border: '2px solid #FCD34D',
+              marginTop: 'auto',
+            }}>
+              <span style={{ fontSize: 32, fontWeight: 700, display: 'flex' }}>
+                {`Rank #${rank} on SalamiTopper`}
+              </span>
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div style={{ 
+            position: 'absolute', 
+            bottom: 60, 
+            fontSize: 24, 
+            opacity: 0.8, 
+            display: 'flex',
+            fontWeight: 600,
+            letterSpacing: '1px'
+          }}>
+            salamitopper.com
+          </div>
         </div>
-      </div>
-    ),
-    {
-      width: 1200,
-      height: 630,
-    }
-  );
-} catch {
-  return new Response('Failed to generate card', { status: 500 });
-}
+      ),
+      {
+        width: 1080,
+        height: 1920,
+      }
+    );
+  } catch (error) {
+    console.error('Card generation error:', error);
+    return new Response('Failed to generate card', { status: 500 });
+  }
 }

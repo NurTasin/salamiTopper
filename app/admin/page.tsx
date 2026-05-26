@@ -62,7 +62,7 @@ export default function AdminDashboard() {
             color="bg-emerald-100"
           />
           <StatCard
-            label="Total Donors"
+            label="Salami Gifts"
             value={stats?.total_donors || 0}
             icon={<Users className="text-blue-600" />}
             color="bg-blue-100"
