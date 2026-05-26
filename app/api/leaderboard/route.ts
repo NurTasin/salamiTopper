@@ -42,6 +42,10 @@ export async function GET(req: Request) {
       total_pages: Math.ceil(parseInt(total.count) / limit),
       total_collected: stats.total_collected || 0,
       total_donors: parseInt(stats.total_donors) || 0,
+    }, {
+      headers: {
+        'Cache-Control': 'no-store, max-age=0, must-revalidate',
+      }
     });
   } catch (error) {
     console.error('Leaderboard error:', error);

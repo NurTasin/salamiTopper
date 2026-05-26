@@ -10,7 +10,11 @@ export async function GET() {
       ORDER BY created_at DESC
     `;
 
-    return NextResponse.json(transactions);
+    return NextResponse.json(transactions, {
+      headers: {
+        'Cache-Control': 'no-store, max-age=0, must-revalidate',
+      }
+    });
   } catch (error) {
     console.error('Admin transactions error:', error);
     return NextResponse.json({ message: 'Internal server error' }, { status: 500 });

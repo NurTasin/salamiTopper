@@ -19,6 +19,10 @@ export async function GET() {
       total_donors: parseInt(stats.total_donors) || 0,
       pending_count: parseInt(stats.pending_count) || 0,
       failed_count: parseInt(stats.failed_count) || 0,
+    }, {
+      headers: {
+        'Cache-Control': 'no-store, max-age=0, must-revalidate',
+      }
     });
   } catch (error) {
     console.error('Admin stats error:', error);

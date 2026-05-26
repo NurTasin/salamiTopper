@@ -3,13 +3,24 @@ import DonationForm from '@/components/DonationForm';
 import Ticker from '@/components/Ticker';
 import { Trophy, Gift, Heart, Star } from 'lucide-react';
 import Link from 'next/link';
+import { sql } from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
 
 async function getStats() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/leaderboard?limit=1`, { cache: 'no-store' });
-  if (!res.ok) return { total_collected: 0, total_donors: 0 };
-  return res.json();
+  try {
+    const [stats] = await sql`
+      SELECT SUM(amount) as total_collected, COUNT(*) as total_donors
+      FROM donations WHERE status = 'paid'
+    `;
+    return {
+      total_collected: stats.total_collected || 0,
+      total_donors: parseInt(stats.total_donors) || 0,
+    };
+  } catch (error) {
+    console.error('Failed to fetch stats:', error);
+    return { total_collected: 0, total_donors: 0 };
+  }
 }
 
 export default async function Home() {
