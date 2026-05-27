@@ -3,6 +3,15 @@ import { sql } from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
 
+interface DonationRow {
+  id: string;
+  name: string;
+  amount: string | number | null;
+  is_amount_hidden: boolean;
+  message: string | null;
+  paid_at: string | Date;
+}
+
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const page = parseInt(searchParams.get('page') || '1');
@@ -13,12 +22,23 @@ export async function GET(req: Request) {
   try {
     const query = search ? `%${search}%` : '%';
     
-    const donations = await sql`
+    // Always fetch the global top 3
+    const topThreeRaw = await sql`
+      SELECT id, name, amount, is_amount_hidden, message, paid_at
+      FROM donations
+      WHERE status = 'paid'
+      ORDER BY amount DESC, paid_at ASC
+      LIMIT 3
+    `;
+
+    // Fetch paginated donations starting from rank 4
+    const listOffset = 3 + offset;
+    const donationsRaw = await sql`
       SELECT id, name, amount, is_amount_hidden, message, paid_at
       FROM donations
       WHERE status = 'paid' AND name ILIKE ${query}
       ORDER BY amount DESC, paid_at ASC
-      LIMIT ${limit} OFFSET ${offset}
+      LIMIT ${limit} OFFSET ${listOffset}
     `;
 
     const [total] = await sql`
@@ -31,15 +51,18 @@ export async function GET(req: Request) {
       FROM donations WHERE status = 'paid'
     `;
 
-    // Mask amount if hidden
-    const maskedDonations = donations.map(d => ({
+    const topThree = topThreeRaw as unknown as DonationRow[];
+    const donations = donationsRaw as unknown as DonationRow[];
+
+    const mask = (d: DonationRow) => ({
       ...d,
       amount: d.is_amount_hidden ? null : d.amount,
-    }));
+    });
 
     return NextResponse.json({
-      donations: maskedDonations,
-      total_pages: Math.ceil(parseInt(total.count) / limit),
+      top_three: topThree.map(mask),
+      donations: donations.map(mask),
+      total_pages: Math.ceil(Math.max(0, parseInt(total.count) - 3) / limit),
       total_collected: stats.total_collected || 0,
       total_donors: parseInt(stats.total_donors) || 0,
     }, {

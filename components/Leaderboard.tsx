@@ -15,6 +15,7 @@ interface Donation {
 }
 
 export default function Leaderboard() {
+  const [topThree, setTopThree] = useState<Donation[]>([]);
   const [donations, setDonations] = useState<Donation[]>([]);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
@@ -24,7 +25,8 @@ export default function Leaderboard() {
     try {
       const res = await fetch(`/api/leaderboard?page=${page}&search=${search}`, { cache: 'no-store' });
       const data = await res.json();
-      setDonations(data.donations);
+      setTopThree(data.top_three || []);
+      setDonations(data.donations || []);
       setTotalPages(data.total_pages);
     } catch {
       console.error('Failed to fetch leaderboard');
@@ -40,9 +42,6 @@ export default function Leaderboard() {
     const interval = setInterval(fetchLeaderboard, 15000);
     return () => clearInterval(interval);
   }, [fetchLeaderboard]);
-
-  const topThree = donations.slice(0, 3);
-  const others = donations.slice(3);
 
   return (
     <div className="max-w-4xl mx-auto py-12 px-4">
@@ -105,9 +104,9 @@ export default function Leaderboard() {
               </tr>
             </thead>
             <tbody className="divide-y divide-emerald-50">
-              {others.map((d, i) => (
+              {donations.map((d, i) => (
                 <tr key={d.id} className="hover:bg-emerald-50/50 transition-colors">
-                  <td className="px-6 py-4 font-bold text-emerald-800">#{i + 4}</td>
+                  <td className="px-6 py-4 font-bold text-emerald-800">#{((page - 1) * 10) + i + 4}</td>
                   <td className="px-6 py-4 font-medium text-emerald-950">{d.name}</td>
                   <td className="px-6 py-4 text-emerald-700 font-bold">
                     {d.is_amount_hidden ? 'Hidden 🤫' : formatCurrency(d.amount!)}
